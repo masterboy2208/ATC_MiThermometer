@@ -1,9 +1,7 @@
-yaml
-
 name: Compile Viktor Firmware
 
 on:
-  workflow_dispatch: # Aktiviert den manuellen Startknopf
+  workflow_dispatch:
 
 jobs:
   build:
