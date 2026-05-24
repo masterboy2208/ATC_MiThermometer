@@ -15,7 +15,8 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y make wget tar lib32z1
-        wget https://github.com
+        # Korrigierter Direktlink mit Ausgabename (-O)
+        wget -O tc32_gcc_v2.0.tar.gz "https://github.com"
         sudo tar -C /opt -xzf tc32_gcc_v2.0.tar.gz
         echo "/opt/tc32/bin" >> $GITHUB_PATH
 
