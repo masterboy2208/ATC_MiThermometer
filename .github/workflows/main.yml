@@ -1,0 +1,33 @@
+yaml
+
+name: Compile Viktor Firmware
+
+on:
+  workflow_dispatch: # Aktiviert den manuellen Startknopf
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Install Toolchain and Build Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y make wget tar lib32z1
+        wget https://github.com
+        sudo tar -C /opt -xzf tc32_gcc_v2.0.tar.gz
+        echo "/opt/tc32/bin" >> $GITHUB_PATH
+
+    - name: Compile for TLSR8251
+      run: |
+        make -C src/ clean
+        make -C src/
+
+    - name: Upload Compiled Binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: custom-firmware-tlsr8251
+        path: src/*.bin
