@@ -22,6 +22,12 @@ jobs:
         env:
           TEL_PATH: /opt/Telink_825X_SDK
         run: |
+          echo "=== Wo bin ich gerade? ==="
+          pwd
+          echo "=== Was liegt im Hauptverzeichnis? ==="
+          ls -la
+          echo "=== Gibt es einen src-Ordner und was ist drin? ==="
+          ls -la src/ || echo "Kein src-Ordner da"
           sed -i 's/tl_check_fw2.exe/.\/tl_check_fw.sh/g' Makefile
           sed -i 's/tl_check_fw.exe/.\/tl_check_fw.sh/g' Makefile
           chmod +x tl_check_fw.sh
