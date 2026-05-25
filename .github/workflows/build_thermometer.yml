@@ -24,6 +24,13 @@ jobs:
       run: |
         make clean
         make
+
+     # NEU: Dieser Befehl sucht auf dem gesamten Server nach den erzeugten .bin Dateien
+    - name: Locate Bin Files
+      run: |
+        echo "=== SUCHE NACH GENERIERTEN BIN-DATEIEN ==="
+        find . -name "*.bin" -type f
+        
         cd $GITHUB_WORKSPACE
 
     - name: Upload Artifacts
