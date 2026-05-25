@@ -25,7 +25,7 @@ jobs:
 
     - name: Build Firmware
       env:
-        TEL_PATH: /opt/Telink_825X_SDK
+        TEL_PATH: /SDK
       run: |
         make
         cd $GITHUB_WORKSPACE
