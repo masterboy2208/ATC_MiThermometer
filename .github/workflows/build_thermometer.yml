@@ -18,23 +18,37 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    # Notwendig, da der vom Makefile heruntergeladene Linux-Compiler 32-Bit-Bibliotheken benötigt
+    - name: Install 32-bit libraries
+      run: |
+        sudo dpkg --add-architecture i386
+        sudo apt-get update
+        sudo apt-get install -y libc6:i386 libstdc++6:i386
+
     - name: Build Firmware
       env:
         TEL_PATH: ./SDK
       run: |
+        # 1. Bereinigen
         make clean
-        make
+        
+        # 2. Pre-Build triggern, damit das Makefile den Linux-Compiler herunterlädt
+        make pre-build
+        
+        # 3. Dem heruntergeladenen Compiler unter Linux Ausführungsrechte (chmod +x) geben
+        chmod -R +x ./SDK/tools/linux/tc32/bin/
+        
+        # 4. Der exakte Build-Aufruf mit den Parametern aus der makeall.cmd
+        make -j PROJECT_NAME=ATC_v58 POJECT_DEF="-DDEVICE_TYPE=DEVICE_LYWSD03MMC"
 
-     # NEU: Dieser Befehl sucht auf dem gesamten Server nach den erzeugten .bin Dateien
     - name: Locate Bin Files
       run: |
         echo "=== SUCHE NACH GENERIERTEN BIN-DATEIEN ==="
         find . -name "*.bin" -type f
-        
-        cd $GITHUB_WORKSPACE
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
         name: masterboy-firmware
-        path: ./bin/ATC_v58.bin
+        # Laut Ihrem Makefile wird die Datei direkt im Hauptverzeichnis abgelegt
+        path: ./ATC_v58.bin
