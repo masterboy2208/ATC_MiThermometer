@@ -20,6 +20,7 @@ jobs:
         wget http://shyboy.oss-cn-shenzhen.aliyuncs.com/readonly/tc32_gcc_v2.0.tar.bz2
         sudo mkdir -p /opt/Telink_825X_SDK/tools/linux
         sudo tar -xvjf tc32_gcc_v2.0.tar.bz2 -C /opt/Telink_825X_SDK/tools/linux/
+        sudo chmod -R +x /opt/Telink_825X_SDK/tools/linux/tc32/bin/
         ls -la /opt/Telink_825X_SDK/tools/linux/
 
     - name: Build Firmware
