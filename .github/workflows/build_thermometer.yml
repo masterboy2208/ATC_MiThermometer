@@ -22,7 +22,9 @@ jobs:
         env:
           TEL_PATH: /opt/Telink_825X_SDK
         run: |
-          cd ATC_Thermometer
+          sed -i 's/tl_check_fw2.exe/.\/tl_check_fw.sh/g' Makefile
+          sed -i 's/tl_check_fw.exe/.\/tl_check_fw.sh/g' Makefile
+          chmod +x tl_check_fw.sh
           make
           cd $GITHUB_WORKSPACE
           ls -la
