@@ -19,6 +19,7 @@ jobs:
       env:
         TEL_PATH: ./SDK
       run: |
+        make clean
         make
         cd $GITHUB_WORKSPACE
 
