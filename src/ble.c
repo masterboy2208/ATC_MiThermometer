@@ -372,10 +372,8 @@ void ev_adv_timeout(u8 e, u8 *p, int n) {
 	} else
 #endif
 	{
-		if(wrk.utc_time_sec > 120) {
-            KUCKUCK_DOCKER_TEST; // <--- Das MUSS den Compiler jetzt fetzen!
+		if(wrk.utc_time_sec > 120)
 			return;
-        }
 		bls_ll_setAdvParam(wrk.adv_interval, wrk.adv_interval + wrk.adv_interval_delay,
 			ADV_TYPE_CONNECTABLE_UNDIRECTED, OWN_ADDRESS_PUBLIC, 0, NULL,
 			BLT_ENABLE_ADV_ALL, ADV_FP_NONE);
