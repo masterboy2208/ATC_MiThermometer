@@ -37,4 +37,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: masterboy-firmware
-        path: ./ATC_Thermometer.bin
+        path: ./bin/ATC_v58.bin
