@@ -326,8 +326,10 @@ void ev_adv_timeout(u8 e, u8 *p, int n) {
 	if (adv_buf.ext_adv_init != EXT_ADV_Off) { // extension advertise
 		if(wrk.ble_connected)
 			return;
-		 if(wrk.utc_time_sec > 120) // Masterboy
-			 return; // Masterboy
+		if(wrk.utc_time_sec > 120) { // Masterboy
+			blc_ll_setExtAdvEnable_1(BLC_ADV_DISABLE, 0, ADV_HANDLE0, 0 , 0); // Masterboy: Stop Ext Adv
+			return; // Masterboy
+		}
 		if(adv_buf.ext_adv_init == EXT_ADV_1M) {
 			//adv_set: Legacy
 			blc_ll_setExtAdvParam(ADV_HANDLE0,
@@ -372,8 +374,10 @@ void ev_adv_timeout(u8 e, u8 *p, int n) {
 	} else
 #endif
 	{
-		if(wrk.utc_time_sec > 120) // Masterboy
+		if(wrk.utc_time_sec > 120) { // Masterboy
+			bls_ll_setAdvEnable(BLC_ADV_DISABLE); // Masterboy: Stop Legacy Adv
 			return; // Masterboy
+		}
 		bls_ll_setAdvParam(wrk.adv_interval, wrk.adv_interval + wrk.adv_interval_delay,
 			ADV_TYPE_CONNECTABLE_UNDIRECTED, OWN_ADDRESS_PUBLIC, 0, NULL,
 			BLT_ENABLE_ADV_ALL, ADV_FP_NONE);
