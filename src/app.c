@@ -80,7 +80,7 @@ const cfg_t def_cfg = {
 		.flg.comfort_smiley = true,
 		.flg.lp_measures = true,
 		.flg.advertising_type = ADV_TYPE_DEFAULT,
-		.rf_tx_power = RF_POWER_P0p04dBm,// RF_POWER_P3p01dBm,
+		.rf_tx_power = RF_POWER_P0p04dBm, // RF_POWER_P3p01dBm,
 		.connect_latency = DEF_CONNECT_LATENCY, // (49+1)*1.25*16 = 1000 ms
 		.event_adv_cnt = 6,
 		.flg3.adv_interval_delay = 10,
