@@ -310,7 +310,7 @@ static const external_data_t def_ext = {
 #if (DEVICE_TYPE == DEVICE_MJWSD05MMC) || (DEVICE_TYPE == DEVICE_MJWSD05MMC_EN) || (DEVICE_TYPE == DEVICE_LYWSD02MMC)
 		.number = 1234500,
 		.vtime_sec = 30, // 30 sec
-		.flg.smiley = 7, // 7 = "(ooo)" 
+		.flg.smiley = 7, // 7 = "(ooo)"
 		.flg.battery = false,
 		.flg.temp_symbol = 0 //LCD_SYM_N // 0 = " ", ... app.h
 #else
@@ -319,7 +319,7 @@ static const external_data_t def_ext = {
 		.vtime_sec = 60, // 1 minutes
 		.flg.smiley = 5, // 5 = "(^-^)" Masterboy 7 --> 5
 		.flg.percent_on = true,
-		.flg.battery = true, //        Masterboy false --> true
+		.flg.battery = false,
 		.flg.temp_symbol = 5 // 5 = "°C", ... app.h
 #endif
 		};
