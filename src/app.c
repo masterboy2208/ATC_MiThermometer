@@ -69,8 +69,8 @@ RAM u8 bindkey[16];
 #if (DEV_SERVICES & SERVICE_SCREEN)
 RAM scomfort_t cmf;
 const scomfort_t def_cmf = {
-		.t = {1500,3000}, // x0.01 C Masterboy: 2100,2600 --> 1500,3000
-		.h = {0000,1500}  // x0.01 % Masterboy: 3000,6000 --> 0000,1500
+		.t = {2100,2600}, // x0.01 C
+		.h = {3000,6000}  // x0.01 %
 };
 #endif
 
@@ -80,7 +80,7 @@ const cfg_t def_cfg = {
 		.flg.comfort_smiley = true,
 		.flg.lp_measures = true,
 		.flg.advertising_type = ADV_TYPE_DEFAULT,
-		.rf_tx_power = RF_POWER_N25p18dBm,// RF_POWER_P3p01dBm,       Masterboy Power Saving RF_POWER_P0p04dBm, --> RF_POWER_N25p18dBm,
+		.rf_tx_power = RF_POWER_P0p04dBm,// RF_POWER_P3p01dBm,
 		.connect_latency = DEF_CONNECT_LATENCY, // (49+1)*1.25*16 = 1000 ms
 		.event_adv_cnt = 6,
 		.flg3.adv_interval_delay = 10,
@@ -93,12 +93,12 @@ const cfg_t def_cfg = {
 #endif
 #elif DEVICE_TYPE == DEVICE_LYWSD03MMC
 		.flg2.adv_flags = true,
-		.advertising_interval = 160, // multiply by 62.5 ms = 10 sec Masterboy Power Saving 40 --> 160
-		.measure_interval = 24, // * advertising_interval = 240 sec  Masterboy Power Saving 4  --> 24
-		.min_step_time_update_lcd = 255, //x0.05 sec,   12.75 sec    Masterboy Power Saving 49 --> 255
+		.advertising_interval = 40, // multiply by 62.5 ms = 2.5 sec
+		.measure_interval = 4, // * advertising_interval = 10 sec
+		.min_step_time_update_lcd = 49, //x0.05 sec,   2.45 sec
 		.hw_ver = HW_VER_LYWSD03MMC_B14,
 #if (DEV_SERVICES & SERVICE_HISTORY)
-		.averaging_measurements = 0, // * measure_interval = 24 * 0 = 0 sec = 0 minutes  Masterboy flash write reduction 180 --> 0
+		.averaging_measurements = 180, // * measure_interval = 10 * 180 = 1800 sec = 30 minutes
 #endif
 #elif DEVICE_TYPE == DEVICE_MHO_C401
 		.flg2.adv_flags = true,
@@ -317,7 +317,7 @@ static const external_data_t def_ext = {
 		.big_number = 0,
 		.small_number = 0,
 		.vtime_sec = 60, // 1 minutes
-		.flg.smiley = 5, // 5 = "(^-^)" Masterboy 7 --> 5
+		.flg.smiley = 7, // 7 = "(ooo)"
 		.flg.percent_on = true,
 		.flg.battery = false,
 		.flg.temp_symbol = 5 // 5 = "°C", ... app.h
@@ -1002,9 +1002,9 @@ void main_loop(void) {
 		wrk.utc_time_sec_tick += wrk.utc_time_tick_step;
 		wrk.utc_time_sec++; // + 1 sec
 
-		// Masterboy - Switch off Advertising after 120 sec
+		// Masterboy - Switch off Advertising after 300 sec
 		static _attribute_data_retention_ u8 adv_mode = 0;
-		if ((wrk.utc_time_sec >= 120) && (adv_mode == 0)) {
+		if ((wrk.utc_time_sec >= 300) && (adv_mode == 0)) {
 			bls_ll_setAdvEnable(BLC_ADV_DISABLE);
 			adv_mode = 1;
 		}
