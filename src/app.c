@@ -80,6 +80,7 @@ const cfg_t def_cfg = {
 		.flg.comfort_smiley = true,
 		.flg.lp_measures = false, // Masterboy true --> false
 		.flg.advertising_type = ADV_TYPE_DEFAULT,
+		.flg.show_batt_enabled = true, // Masterboy: Show Battery Indicator Screen
 		.rf_tx_power = RF_POWER_N25p18dBm, // RF_POWER_P3p01dBm, Masterboy RF_POWER_P0p04dBm, --> RF_POWER_N25p18dBm,
 		.connect_latency = DEF_CONNECT_LATENCY, // (49+1)*1.25*16 = 1000 ms
 		.event_adv_cnt = 6,
@@ -319,7 +320,7 @@ static const external_data_t def_ext = {
 		.vtime_sec = 60, // 1 minutes
 		.flg.smiley = 7, // 7 = "(ooo)"
 		.flg.percent_on = true,
-		.flg.battery = true, // Masterboy false --> true
+		.flg.battery = false,
 		.flg.temp_symbol = 5 // 5 = "°C", ... app.h
 #endif
 		};
