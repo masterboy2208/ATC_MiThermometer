@@ -370,8 +370,18 @@ void scan_start(void) {
 	adv_buf.data_size = 0; // flag adv_buf.send_count++ over adv.event
 	bls_ll_setAdvDuration(SCAN_ADV_INTERVAL*SCAN_ADV_COUNT*625+33, 1);
 	//blta.adv_interval = 500*CLOCK_16M_SYS_TIMER_CLK_1MS; // system tick
-	bls_ll_setAdvEnable(BLC_ADV_ENABLE);  // adv enable
-	scan.enabled = 1;
+		
+	// Masterboy Disable Bluetooth Advertising after 120 sec 
+	if (wrk.utc_time_sec >= 120)	
+	{
+		bls_ll_setAdvEnable(BLC_ADV_DISABLE);
+		scan.enabled = 0;
+	} 
+	else
+	{
+		bls_ll_setAdvEnable(BLC_ADV_ENABLE);  // adv enable
+		scan.enabled = 1;
+	}
 }
 
 //////////////////////////////////////////////////////////
