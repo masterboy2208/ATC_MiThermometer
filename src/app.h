@@ -320,7 +320,6 @@ typedef struct _work_flg_t {
 		} b; // bits-flags measurements completed
 	} msc; // flags measurements completed
 	u8 adv_interval_delay; // adv interval + rand delay in 0.625 ms // = 10 or 0
-	u8 adv_was_disabled; // Masterboy, 1= Advertising ist bereits abgeschaltet
 } work_flg_t;
 extern work_flg_t wrk;
 
