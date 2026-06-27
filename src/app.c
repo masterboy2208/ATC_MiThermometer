@@ -1002,13 +1002,6 @@ void main_loop(void) {
 	while (clock_time() -  wrk.utc_time_sec_tick > wrk.utc_time_tick_step) {
 		wrk.utc_time_sec_tick += wrk.utc_time_tick_step;
 		wrk.utc_time_sec++; // + 1 sec
-		// Masterboy - Switch off Advertising after 120 sec
-		if (wrk.utc_time_sec >= 120 && !wrk.adv_was_disabled) 
-		{ 
-		bls_ll_setAdvEnable(BLC_ADV_DISABLE); 
-		wrk.adv_was_disabled = 1;
-	}
-
 #if (DEV_SERVICES & SERVICE_HARD_CLOCK)
 		if(++rtc.seconds >= 60) {
 			rtc.seconds = 0;
