@@ -299,6 +299,13 @@ int scanning_event_callback(u32 h, u8 *p, int n) {
 // start wakeup if(scan.enabled) scan_wakeup();
 //////////////////////////////////////////////////////////
 void scan_wakeup(void) {
+	// Masterboy disable BT Adv after 2 min and delete flag
+	if (wrk.utc_time_sec >= 120) {
+		blc_ll_setScanEnable(BLC_SCAN_DISABLE, DUP_FILTER_DISABLE); // Receiver off
+		scan.enabled = 0;
+		return;
+	}
+	
 	scan.start_tik = clock_time() | 1;
 	//scan setting
 	blc_ll_initScanning_module(mac_public);
@@ -348,6 +355,14 @@ void scan_init(void) {
 // scan start if (adv_buf.ext_adv_init != EXT_ADV_Off) // not support extension advertise
 //////////////////////////////////////////////////////////
 void scan_start(void) {
+	// Masterboy disable BT Adv after 2 min and delete flag
+	if (wrk.utc_time_sec >= 120) {
+		bls_ll_setAdvEnable(BLC_ADV_DISABLE); // Sender off
+		blc_ll_setScanEnable(BLC_SCAN_DISABLE, DUP_FILTER_DISABLE); // Receiver off
+		scan.enabled = 0; // Main Switch for BT module off
+		return;
+	}
+	
 	// init new adv
 	bls_ll_setAdvEnable(BLC_ADV_DISABLE);  // adv disable
 	bls_ll_setAdvParam(SCAN_ADV_INTERVAL, SCAN_ADV_INTERVAL,
