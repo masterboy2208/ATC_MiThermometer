@@ -998,7 +998,7 @@ void user_init_deepRetn(void) {//after sleep this will get executed
 //----------------------- main_loop() ---------------------
 _attribute_ram_code_
 void main_loop(void) {
-	if ((wrk.utc_time_sec > 120) && bls_ll_isAdvEnable()) bls_ll_setAdvEnable(BLC_ADV_DISABLE); // Masterboy BT Adv off nach 2 min Betriebszeit
+	if ((wrk.utc_time_sec > 120) && ((blc_ll_getCurrentState() == BLS_LINK_STATE_ADV) || (blc_ll_getCurrentState() == BLS_LINK_STATE_SCAN))) bls_ll_setAdvEnable(BLC_ADV_DISABLE); // Masterboy BT Adv off after 2 min device running time
 	blt_sdk_main_loop();
 	while (clock_time() -  wrk.utc_time_sec_tick > wrk.utc_time_tick_step) {
 		wrk.utc_time_sec_tick += wrk.utc_time_tick_step;
