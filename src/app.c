@@ -998,7 +998,6 @@ void user_init_deepRetn(void) {//after sleep this will get executed
 //----------------------- main_loop() ---------------------
 _attribute_ram_code_
 void main_loop(void) {
-	if ((wrk.utc_time_sec > 120) && ((blc_ll_getCurrentState() == BLS_LINK_STATE_ADV) || (blc_ll_getCurrentState() == BLS_LINK_STATE_SCAN))) bls_ll_setAdvEnable(BLC_ADV_DISABLE); // Masterboy BT Adv off after 2 min device running time
 	blt_sdk_main_loop();
 	while (clock_time() -  wrk.utc_time_sec_tick > wrk.utc_time_tick_step) {
 		wrk.utc_time_sec_tick += wrk.utc_time_tick_step;
@@ -1281,14 +1280,19 @@ void main_loop(void) {
 						lcd_flg.update = 1;
 				}
 #elif !((DEVICE_TYPE == DEVICE_MJWSD05MMC) || (DEVICE_TYPE == DEVICE_MJWSD05MMC_EN))
-				if (new - lcd_flg.tim_last_chow >= lcd_flg.min_step_time_update_lcd) {
-					lcd_flg.tim_last_chow = new;
-					lcd_flg.show_stage++;
-					if(lcd_flg.update_next_measure) {
-						lcd_flg.update = wrk.msc.b.update_lcd;
-						wrk.msc.b.update_lcd = 0;
-					} else
-						lcd_flg.update = 1;
+				// Masterboy if (new - lcd_flg.tim_last_chow >= lcd_flg.min_step_time_update_lcd) {
+				// Masterboy	lcd_flg.tim_last_chow = new;
+				// Masterboy	lcd_flg.show_stage++;
+				// Masterboy	if(lcd_flg.update_next_measure) {
+				// Masterboy		lcd_flg.update = wrk.msc.b.update_lcd;
+				// Masterboy		wrk.msc.b.update_lcd = 0;
+				// Masterboy	} else
+				// Masterboy		lcd_flg.update = 1;
+				// Masterboy the next four lines are new to update display only if new measurement was done
+				if (wrk.msc.b.update_lcd) {
+					lcd_flg.update = 1;         // Update-Vorgang erlauben
+					wrk.msc.b.update_lcd = 0;   // Mess-Flag sofort zurücksetzen
+					lcd_flg.show_stage++;       // Interne Stufe hochzählen (für Display-Wechsel falls aktiv)				
 				}
 #endif
 				if (lcd_flg.update) {
