@@ -51,4 +51,4 @@ jobs:
       with:
         name: masterboy-firmware
         # Laut Ihrem Makefile wird die Datei direkt im Hauptverzeichnis abgelegt
-        path: ./ATC_v58_Masterboy.bin
+        path: ./ATC_v58.bin
