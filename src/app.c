@@ -96,7 +96,7 @@ const cfg_t def_cfg = {
 		.flg2.adv_flags = true,
 		.advertising_interval = 160, // multiply by 62.5 ms = 10 sec Masterboy Power Saving 40 --> 160
 		.measure_interval = 24, // * advertising_interval = 240 sec  Masterboy Power Saving 4  --> 24
-		.min_step_time_update_lcd = 255, //x0.05 sec,   12.75 sec    Masterboy Power Saving 49 --> 255
+		.min_step_time_update_lcd = 200, //x0.05 sec,   10 sec       Masterboy Power Saving 49 --> 200
 		.hw_ver = HW_VER_LYWSD03MMC_B14,
 #if (DEV_SERVICES & SERVICE_HISTORY)
 		.averaging_measurements = 0, // * measure_interval = 24 * 0 = 0 sec = 0 minutes  Masterboy flash write reduction 180 --> 0
