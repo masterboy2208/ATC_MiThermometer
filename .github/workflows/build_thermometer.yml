@@ -39,7 +39,7 @@ jobs:
         chmod -R +x ./SDK/tools/linux/tc32/bin/
         
         # 4. Der exakte Build-Aufruf mit den Parametern aus der makeall.cmd
-        make -j PROJECT_NAME=ATC_v58_Masterboy POJECT_DEF="-DDEVICE_TYPE=DEVICE_LYWSD03MMC"
+        make -j PROJECT_NAME=ATC_v58 POJECT_DEF="-DDEVICE_TYPE=DEVICE_LYWSD03MMC"
 
     - name: Locate Bin Files
       run: |
@@ -51,4 +51,4 @@ jobs:
       with:
         name: masterboy-firmware
         # Laut Ihrem Makefile wird die Datei direkt im Hauptverzeichnis abgelegt
-        path: ./ATC_v58.bin
+        path: ./ATC_v58_Masterboy.bin
