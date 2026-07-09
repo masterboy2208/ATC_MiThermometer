@@ -370,9 +370,15 @@ void ev_adv_timeout(u8 e, u8 *p, int n) {
 	} else
 #endif
 	{
-		bls_ll_setAdvParam(wrk.adv_interval, wrk.adv_interval + wrk.adv_interval_delay,
-			ADV_TYPE_CONNECTABLE_UNDIRECTED, OWN_ADDRESS_PUBLIC, 0, NULL,
-			BLT_ENABLE_ADV_37, ADV_FP_NONE); // Masterboy only one RF channel BLT_ENABLE_ADV_ALL --> BLT_ENABLE_ADV_37
+		if (wrk.utc_time_sec > 120) {
+			bls_ll_setAdvParam(wrk.adv_interval, wrk.adv_interval + wrk.adv_interval_delay,
+				ADV_TYPE_NONCONNECTABLE_UNDIRECTED, OWN_ADDRESS_PUBLIC, 0, NULL,
+				BLT_ENABLE_ADV_37, ADV_FP_NONE); // Masterboy only one RF channel BLT_ENABLE_ADV_ALL --> BLT_ENABLE_ADV_37, not connectable
+		} else {
+			bls_ll_setAdvParam(wrk.adv_interval, wrk.adv_interval + wrk.adv_interval_delay,
+				ADV_TYPE_CONNECTABLE_UNDIRECTED, OWN_ADDRESS_PUBLIC, 0, NULL,
+				BLT_ENABLE_ADV_ALL, ADV_FP_NONE);
+		}
 		bls_ll_setScanRspData((u8 *) ble_name, ble_name[0]+1);
 		bls_ll_setAdvEnable(BLC_ADV_ENABLE);  //ADV enable
 	}
