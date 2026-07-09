@@ -1280,19 +1280,11 @@ void main_loop(void) {
 						lcd_flg.update = 1;
 				}
 #elif !((DEVICE_TYPE == DEVICE_MJWSD05MMC) || (DEVICE_TYPE == DEVICE_MJWSD05MMC_EN))
-				// Masterboy if (new - lcd_flg.tim_last_chow >= lcd_flg.min_step_time_update_lcd) {
-				// Masterboy	lcd_flg.tim_last_chow = new;
-				// Masterboy	lcd_flg.show_stage++;
-				// Masterboy	if(lcd_flg.update_next_measure) {
-				// Masterboy		lcd_flg.update = wrk.msc.b.update_lcd;
-				// Masterboy		wrk.msc.b.update_lcd = 0;
-				// Masterboy	} else
-				// Masterboy		lcd_flg.update = 1;
-				// Masterboy the next four lines are new to update display only if new measurement was done
+				// Masterboy next 5 lines: update display only if new measurement was done
 				if (wrk.msc.b.update_lcd) {
-					lcd_flg.update = 1;         // Update-Vorgang erlauben
-					wrk.msc.b.update_lcd = 0;   // Mess-Flag sofort zurücksetzen
-					lcd_flg.show_stage++;       // Interne Stufe hochzählen (für Display-Wechsel falls aktiv)				
+					lcd_flg.update = 1;
+					wrk.msc.b.update_lcd = 0;
+					lcd_flg.show_stage++;			
 				}
 #endif
 				if (lcd_flg.update) {
