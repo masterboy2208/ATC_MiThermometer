@@ -138,18 +138,71 @@ static void lcd_set_buf_uart_spi(u8 *p) {
 
 _attribute_ram_code_
 static void lcd_send_spi_byte(u8 b) {
-	u32 x = b;
-	for(int i = 0; i < 8; i++) {
-		BM_CLR(reg_gpio_out(GPIO_LCD_CLK), GPIO_LCD_CLK & 0xff); // CLK down
-		if(x & 0x01)
-			BM_SET(reg_gpio_out(GPIO_LCD_SDI), GPIO_LCD_SDI & 0xff); // data "1"
-		else
-			BM_CLR(reg_gpio_out(GPIO_LCD_SDI), GPIO_LCD_SDI & 0xff); // data "0"
-		sleep_us(CLK_DELAY_US);
-		BM_SET(reg_gpio_out(GPIO_LCD_CLK), GPIO_LCD_CLK & 0xff); // CLK Up
-		sleep_us(CLK_DELAY_US);
-		x >>= 1;
-	}
+	// Bit 0 (Niedrigstes Bit zuerst bei diesem Treiber)
+	BM_CLR(reg_gpio_out(GPIO_LCD_CLK), GPIO_LCD_CLK & 0xff); // CLK down
+	if(b & 0x01) BM_SET(reg_gpio_out(GPIO_LCD_SDI), GPIO_LCD_SDI & 0xff);
+	else BM_CLR(reg_gpio_out(GPIO_LCD_SDI), GPIO_LCD_SDI & 0xff);
+	sleep_us(CLK_DELAY_US);
+	BM_SET(reg_gpio_out(GPIO_LCD_CLK), GPIO_LCD_CLK & 0xff); // CLK Up
+	sleep_us(CLK_DELAY_US);
+
+	// Bit 1
+	BM_CLR(reg_gpio_out(GPIO_LCD_CLK), GPIO_LCD_CLK & 0xff);
+	if(b & 0x02) BM_SET(reg_gpio_out(GPIO_LCD_SDI), GPIO_LCD_SDI & 0xff);
+	else BM_CLR(reg_gpio_out(GPIO_LCD_SDI), GPIO_LCD_SDI & 0xff);
+	sleep_us(CLK_DELAY_US);
+	BM_SET(reg_gpio_out(GPIO_LCD_CLK), GPIO_LCD_CLK & 0xff);
+	sleep_us(CLK_DELAY_US);
+
+	// Bit 2
+	BM_CLR(reg_gpio_out(GPIO_LCD_CLK), GPIO_LCD_CLK & 0xff);
+	if(b & 0x04) BM_SET(reg_gpio_out(GPIO_LCD_SDI), GPIO_LCD_SDI & 0xff);
+	else BM_CLR(reg_gpio_out(GPIO_LCD_SDI), GPIO_LCD_SDI & 0xff);
+	sleep_us(CLK_DELAY_US);
+	BM_SET(reg_gpio_out(GPIO_LCD_CLK), GPIO_LCD_CLK & 0xff);
+	sleep_us(CLK_DELAY_US);
+
+	// Bit 3
+	BM_CLR(reg_gpio_out(GPIO_LCD_CLK), GPIO_LCD_CLK & 0xff);
+	if(b & 0x08) BM_SET(reg_gpio_out(GPIO_LCD_SDI), GPIO_LCD_SDI & 0xff);
+	else BM_CLR(reg_gpio_out(GPIO_LCD_SDI), GPIO_LCD_SDI & 0xff);
+	sleep_us(CLK_DELAY_US);
+	BM_SET(reg_gpio_out(GPIO_LCD_CLK), GPIO_LCD_CLK & 0xff);
+	sleep_us(CLK_DELAY_US);
+
+	// Bit 4
+	BM_CLR(reg_gpio_out(GPIO_LCD_CLK), GPIO_LCD_CLK & 0xff);
+	if(b & 0x10) BM_SET(reg_gpio_out(GPIO_LCD_SDI), GPIO_LCD_SDI & 0xff);
+	else BM_CLR(reg_gpio_out(GPIO_LCD_SDI), GPIO_LCD_SDI & 0xff);
+	sleep_us(CLK_DELAY_US);
+	BM_SET(reg_gpio_out(GPIO_LCD_CLK), GPIO_LCD_CLK & 0xff);
+	sleep_us(CLK_DELAY_US);
+
+	// Bit 5
+	BM_CLR(reg_gpio_out(GPIO_LCD_CLK), GPIO_LCD_CLK & 0xff);
+	if(b & 0x20) BM_SET(reg_gpio_out(GPIO_LCD_SDI), GPIO_LCD_SDI & 0xff);
+	else BM_CLR(reg_gpio_out(GPIO_LCD_SDI), GPIO_LCD_SDI & 0xff);
+	sleep_us(CLK_DELAY_US);
+	BM_SET(reg_gpio_out(GPIO_LCD_CLK), GPIO_LCD_CLK & 0xff);
+	sleep_us(CLK_DELAY_US);
+
+	// Bit 6
+	BM_CLR(reg_gpio_out(GPIO_LCD_CLK), GPIO_LCD_CLK & 0xff);
+	if(b & 0x40) BM_SET(reg_gpio_out(GPIO_LCD_SDI), GPIO_LCD_SDI & 0xff);
+	else BM_CLR(reg_gpio_out(GPIO_LCD_SDI), GPIO_LCD_SDI & 0xff);
+	sleep_us(CLK_DELAY_US);
+	BM_SET(reg_gpio_out(GPIO_LCD_CLK), GPIO_LCD_CLK & 0xff);
+	sleep_us(CLK_DELAY_US);
+
+	// Bit 7
+	BM_CLR(reg_gpio_out(GPIO_LCD_CLK), GPIO_LCD_CLK & 0xff);
+	if(b & 0x80) BM_SET(reg_gpio_out(GPIO_LCD_SDI), GPIO_LCD_SDI & 0xff);
+	else BM_CLR(reg_gpio_out(GPIO_LCD_SDI), GPIO_LCD_SDI & 0xff);
+	sleep_us(CLK_DELAY_US);
+	BM_SET(reg_gpio_out(GPIO_LCD_CLK), GPIO_LCD_CLK & 0xff);
+	sleep_us(CLK_DELAY_US);
+
+	// Das abschließende Sicherheits-Delay am Ende der Funktion (aus Viktors Originalcode)
 	sleep_us(CLK_DELAY_US);
 }
 
